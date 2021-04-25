@@ -17,7 +17,6 @@ class CreateTeamsTable extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('leader_id')->nullable();;
             $table->text('description');
             $table->timestamps();
             $table->softDeletes();

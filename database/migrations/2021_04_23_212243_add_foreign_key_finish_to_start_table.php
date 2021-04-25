@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddForeignKeyTableUsers extends Migration
+class AddForeignKeyFinishToStartTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddForeignKeyTableUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function ($table) {
-            $table->foreign('role_id')->references('id')->on('roles');
+        Schema::table('finish_to_start', function (Blueprint $table) {
+            $table->foreign('finish_task_id')->references('id')->on('tasks');
+            $table->foreign('start_task_id')->references('id')->on('tasks');
         });
     }
 
@@ -25,6 +26,8 @@ class AddForeignKeyTableUsers extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('start', function (Blueprint $table) {
+            //
+        });
     }
 }

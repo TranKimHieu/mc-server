@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddForeignKeyTableUsers extends Migration
+class AddColumnProjectIdIntoTaskTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddForeignKeyTableUsers extends Migration
      */
     public function up()
     {
-        Schema::table('users', function ($table) {
-            $table->foreign('role_id')->references('id')->on('roles');
+        Schema::table('tasks', function (Blueprint $table) {
+            $table->unsignedBigInteger('project_id');
+            $table->foreign('project_id')->references('id')->on('projects');
         });
     }
 

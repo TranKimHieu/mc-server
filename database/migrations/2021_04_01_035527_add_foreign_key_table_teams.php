@@ -15,7 +15,6 @@ class AddForeignKeyTableTeams extends Migration
     {
         Schema::table('teams', function ($table) {
             $table->foreign('category_id')->references('id')->on('team_categories');
-            $table->foreign('leader_id')->references('id')->on('users');
         });
     }
 
