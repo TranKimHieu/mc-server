@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
 {
-    protected $appends = ['captain_info'];
+    protected $appends = ['captain_info', 'remaining'];
 
     public function captain()
     {
@@ -24,5 +24,10 @@ class Project extends Model
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->toDateString();
+    }
+
+    public function getRemainingAttribute()
+    {
+        return Carbon::parse($this->end_date)->diffInDays(Carbon::now());
     }
 }

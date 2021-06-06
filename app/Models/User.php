@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\Roles;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -16,13 +18,20 @@ class User extends Authenticatable implements JWTSubject
     protected $keyType = 'string';
     public $incrementing = false;
 
+    protected $appends = ['role_name'];
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'address',
+        'phone',
+        'role_id',
     ];
 
     /**
@@ -57,4 +66,27 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Project::class, 'captain_id');
     }
+
+    public function teams()
+    {
+        return $this->belongsToMany(Team::class, 'user_team')->withPivot('is_leader');
+    }
+
+    public function getRoleNameAttribute()
+    {
+        switch ($this->role_id){
+            case Roles::MANAGER:
+                return 'Manager';
+            case Roles::EMPLOYEE:
+                return 'Employee';
+            case Roles::TEAM_LEADER:
+                return 'Team leader';
+        }
+    }
+
+    public function getCreatedAtAttribute()
+    {
+        return Carbon::parse($this->attributes['created_at'])->toDateString();
+    }
+
 }
