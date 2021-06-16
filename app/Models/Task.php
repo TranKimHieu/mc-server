@@ -22,7 +22,7 @@ class Task extends Model
         'project_id'
     ];
 
-    protected $appends = ['text', 'parent'];
+    protected $appends = ['text', 'parent', 'assignee_obj', 'images'];
 
     public function getTextAttribute()
     {
@@ -47,5 +47,15 @@ class Task extends Model
     public function assigneeObj()
     {
         return $this->hasOne(User::class, 'id', 'assignee_id');
+    }
+
+    public function getAssigneeObjAttribute()
+    {
+        return $this->hasOne(User::class, 'id', 'assignee_id')->first();
+    }
+
+    public function getImagesAttribute()
+    {
+        return $this->hasMany(Images::class)->get();
     }
 }

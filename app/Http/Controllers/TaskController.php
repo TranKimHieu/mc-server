@@ -50,7 +50,8 @@ class TaskController extends Controller
             foreach ($payload['assignee_id'] as $id ) {
                 $payload['code'] = uniqid($project->code);
                 $data = Task::query()->create(array_merge($payload, ['assignee_id' => $id]));
-                array_push($datas, $data);
+                $task = Task::query()->find($data->id);
+                array_push($datas, $task);
             }
         }
         return response()->json($datas, 200);

@@ -51,6 +51,11 @@ Route::group([
 ], function () {
     Route::get('list/{task_id}', [Controllers\ImageController::class,'getByTask']);
 });
+Route::group([
+    'prefix' => 'image'
+], function () {
+    Route::post('store', [Controllers\ImageController::class,'store']);
+});
 
 Route::group([
     'middleware' => ['auth.jwt'],
